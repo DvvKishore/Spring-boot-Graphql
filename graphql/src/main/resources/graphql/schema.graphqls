@@ -1,0 +1,63 @@
+enum PassengerType {
+    NORMAL
+    WOMAN
+    SENIOR_CITIZEN
+}
+
+enum BusStatus {
+    ACTIVE
+    CANCELLED
+}
+
+type City {
+    id: ID!
+    name: String!
+}
+
+type Bus {
+    id: ID!
+    busNumber: String!
+    source: City!
+    destination: City!
+    totalSeats: Int!
+    availableNormalSeats: Int!
+    availableWomenSeats: Int!
+    availableSeniorSeats: Int!
+    status: BusStatus!
+    totalAvailableSeats: Int!
+}
+
+type Booking {
+    id: ID!
+    passengerName: String!
+    passengerType: PassengerType!
+    bus: Bus!
+    seatType: PassengerType!
+}
+
+type Query {
+    busesByRoute(source: String!, destination: String!): [Bus]
+    getBus(id: ID!): Bus
+    allBookings: [Booking]
+    getBooking(id: ID!): Booking
+}
+
+type Mutation {
+    addBus(
+        busNumber: String!,
+        source: String!,
+        destination: String!,
+        totalSeats: Int!,
+        womenSeats: Int!,
+        seniorSeats: Int!
+    ): Bus
+
+    bookSeat(
+        busId: ID!,
+        passengerName: String!,
+        passengerType: PassengerType!
+    ): Booking
+
+    cancelBooking(bookingId: ID!): String
+    cancelBus(busId: ID!): String
+}
