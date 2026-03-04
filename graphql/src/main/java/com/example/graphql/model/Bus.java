@@ -18,4 +18,10 @@ public class Bus {
     private int availableWomenSeats;
     private int availableSeniorSeats;
     private BusStatus status;
+
+//    public int getTotalAvailableSeats() {
+//        return getAvailableNormalSeats()
+//                + getAvailableWomenSeats()
+//                + getAvailableSeniorSeats();
+//    }
 }

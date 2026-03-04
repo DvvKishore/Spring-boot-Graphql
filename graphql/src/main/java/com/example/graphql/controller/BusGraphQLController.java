@@ -75,27 +75,11 @@ public class BusGraphQLController {
         return busService.cancelBus(busId);
     }
 
+
+
     // =========================
     // FIELD RESOLVERS
     // =========================
-
-    // Booking -> bus field resolver
-    @SchemaMapping(typeName = "Booking", field = "bus")
-    public Bus resolveBus(Booking booking) {
-        return booking.getBus();
-    }
-
-    // Bus -> source field resolver
-    @SchemaMapping(typeName = "Bus", field = "source")
-    public City resolveSource(Bus bus) {
-        return bus.getSource();
-    }
-
-    // Bus -> destination field resolver
-    @SchemaMapping(typeName = "Bus", field = "destination")
-    public City resolveDestination(Bus bus) {
-        return bus.getDestination();
-    }
 
     @SchemaMapping(typeName = "Bus", field = "totalAvailableSeats")
     public int totalAvailableSeats(Bus bus) {
