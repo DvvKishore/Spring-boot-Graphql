@@ -75,8 +75,6 @@ public class BusGraphQLController {
         return busService.cancelBus(busId);
     }
 
-
-
     // =========================
     // FIELD RESOLVERS
     // =========================

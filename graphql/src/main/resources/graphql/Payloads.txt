@@ -1,0 +1,87 @@
+Add Bus (Mutation)
+curl --location 'http://localhost:8080/graphql' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "query": "mutation { addBus(busNumber: \"KA-01-1234\", source: \"Bangalore\", destination: \"Chennai\", totalSeats: 40, womenSeats: 5, seniorSeats: 5) { id busNumber totalSeats availableNormalSeats availableWomenSeats availableSeniorSeats totalAvailableSeats status } }"
+}'
+
+{
+  "query": "mutation { addBus(busNumber: \"KA-01-1234\", source: \"Bangalore\", destination: \"Chennai\", totalSeats: 40, womenSeats: 5, seniorSeats: 5) { id busNumber totalSeats availableNormalSeats availableWomenSeats availableSeniorSeats totalAvailableSeats status } }"
+}
+
+Get Bus By ID (Query)
+curl --location 'http://localhost:8080/graphql' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "query": "{ getBus(id: \"1\") { id busNumber source { name } destination { name } totalSeats totalAvailableSeats status } }"
+}'
+
+Get Buses By Route
+curl --location 'http://localhost:8080/graphql' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "query": "{ busesByRoute(source: \"Bangalore\", destination: \"Chennai\") { id busNumber totalAvailableSeats status } }"
+}'
+
+Book Seat (NORMAL)
+curl --location 'http://localhost:8080/graphql' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "query": "mutation { bookSeat(busId: \"1\", passengerName: \"Ravi\", passengerType: NORMAL) { id passengerName passengerType seatType bus { busNumber totalAvailableSeats } } }"
+}'
+
+Book Seat (WOMAN)
+curl --location 'http://localhost:8080/graphql' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "query": "mutation { bookSeat(busId: \"1\", passengerName: \"Priya\", passengerType: WOMAN) { id passengerName seatType bus { busNumber availableWomenSeats totalAvailableSeats } } }"
+}'
+
+Book Seat (SENIOR_CITIZEN)
+curl --location 'http://localhost:8080/graphql' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "query": "mutation { bookSeat(busId: \"1\", passengerName: \"Sharma\", passengerType: SENIOR_CITIZEN) { id passengerName seatType bus { busNumber availableSeniorSeats totalAvailableSeats } } }"
+}'
+
+Get All Bookings
+curl --location 'http://localhost:8080/graphql' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "query": "{ allBookings { id passengerName passengerType seatType bus { busNumber source { name } destination { name } } } }"
+}'
+
+Cancel Booking
+curl --location 'http://localhost:8080/graphql' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "query": "mutation { cancelBooking(bookingId: \"1\") }"
+}'
+
+Cancel Bus
+curl --location 'http://localhost:8080/graphql' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "query": "mutation { cancelBus(busId: \"1\") }"
+}'
+
+Complex Nested Query Example
+curl --location 'http://localhost:8080/graphql' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "query": "{ busesByRoute(source: \"Bangalore\", destination: \"Chennai\") { busNumber totalSeats totalAvailableSeats source { id name } destination { id name } status } }"
+}'
+
+curl --location 'http://localhost:8080/graphql' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "query": "mutation AddBus($busNumber: String!, $source: String!, $destination: String!, $totalSeats: Int!, $womenSeats: Int!, $seniorSeats: Int!) { addBus(busNumber: $busNumber, source: $source, destination: $destination, totalSeats: $totalSeats, womenSeats: $womenSeats, seniorSeats: $seniorSeats) { id busNumber } }",
+  "variables": {
+    "busNumber": "KA-02-5678",
+    "source": "Hyderabad",
+    "destination": "Pune",
+    "totalSeats": 50,
+    "womenSeats": 5,
+    "seniorSeats": 5
+  }
+}'
